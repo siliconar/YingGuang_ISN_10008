@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SIF卫星遥感反演与差您处理生产应用示范软件</string>
+   <string>SIF卫星遥感反演与产品处理生产应用示范软件</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">

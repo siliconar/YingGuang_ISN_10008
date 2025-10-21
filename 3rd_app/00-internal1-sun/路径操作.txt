@@ -1,0 +1,29 @@
+// 1. 获取文件名（带后缀）
+    QString fileName = info.fileName();          // "123.png"
+
+    // 2. 获取文件路径（不含文件名）
+    QString filePath = info.path();              // "C:/Users/SITP/Desktop/images"
+
+    // 3. 获取纯文件名（无后缀）
+    QString baseName = info.baseName();          // "123"
+
+    // 4. 获取文件后缀
+    QString suffix = info.suffix();              // "png"
+
+    // 5. 创建文件夹
+    QString newFolderPath = info.path() + "/newFolder";
+    QDir dir;
+    if (!dir.exists(newFolderPath)) {
+        bool ok = dir.mkpath(newFolderPath);     // 递归创建路径
+        qDebug() << "Folder created:" << ok << newFolderPath;
+    }
+
+
+    // 路径合成
+    QString combined = QDir(path1).filePath(path2);
+
+    QString folder = "C:/123";
+    QString file = "456.png";
+
+    QString fullPath = QDir(folder).filePath(file);
+

@@ -1,0 +1,125 @@
+cmake_minimum_required(VERSION 3.16)
+set(PROJECT_NAME YingGuang-platform)
+project(${PROJECT_NAME} LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+
+
+# 设置QT
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(QT_ROOT "C:/Qt/6.7.3/msvc2022_64" CACHE STRING "Qt root directory" FORCE)
+# set(QT_ROOT "C:/Qt/6.9.1/msvc2022_64" CACHE STRING "Qt root directory" FORCE) #测试切换
+set(CMAKE_PREFIX_PATH "${QT_ROOT}/lib/cmake")
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
+
+# 设置输出目录
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/out)
+
+
+include_directories(
+
+
+    3rd_app/common/
+
+)
+
+
+add_executable(
+    ${PROJECT_NAME}
+    main.cpp
+
+    # TitleBar.h TitleBar.cpp
+
+    3rd_app/common/pack_definition.h
+    3rd_app/common/ConfigManager.h  3rd_app/common/ConfigManager.cpp
+
+    SplashWidget.h SplashWidget.cpp
+    DbManagerWindow.h DbManagerWindow.cpp
+    mainWindow.h mainWindow.cpp  mainWindow.ui
+    resources.qrc
+
+
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets  Qt${QT_VERSION_MAJOR}::Sql)
+
+
+# qt deploy
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${QT_ROOT}/bin/windeployqt.exe --no-compiler-runtime --no-system-d3d-compiler --no-quick-import --no-translations $<TARGET_FILE:${PROJECT_NAME}>
+    COMMENT "Running windeployqt for ${PROJECT_NAME}"
+)
+
+
+#======== 独立app编译部分
+# 全局统一 out 目录（供子工程复用）
+# set(SUITE_OUT_DIR "${CMAKE_SOURCE_DIR}/out" CACHE PATH "Root output dir")
+set(MONO_ROOT "${CMAKE_SOURCE_DIR}" CACHE PATH "Monorepo root" FORCE)
+
+add_subdirectory(3rd_app/00-internal1-sun)
+
+
+# 拷贝，数据库文件
+add_custom_target(copy_database ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/database
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/database"
+            "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/database"
+)
+
+
+
+## 星号*匹配符拷贝
+# 1) 找到所有满足 50-exe* 的目录
+file(GLOB EXE_DIRS
+     "${CMAKE_SOURCE_DIR}/3rd_app/50-exe*")
+
+# 2) 定义一个聚合目标
+add_custom_target(copy_exe ALL)
+
+# 3) 逐个目录复制
+foreach(dir ${EXE_DIRS})
+  get_filename_component(name "${dir}" NAME)
+
+  add_custom_command(TARGET copy_exe POST_BUILD
+    # COMMAND ${CMAKE_COMMAND} -E make_directory "${_apps_out}"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${dir}" "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/${name}"
+    VERBATIM
+  )
+endforeach()
+
+
+
+
+
+# # 拷贝，独立软件
+# add_custom_target(copy_exe2_1 ALL
+#     # COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe2_1
+#     COMMAND ${CMAKE_COMMAND} -E copy_directory
+#             "${CMAKE_SOURCE_DIR}/3rd_app/50-exe*"
+#             "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe*"
+# )
+
+# # 拷贝，独立软件
+# add_custom_target(copy_exe2_2 ALL
+#     # COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe2_1
+#     COMMAND ${CMAKE_COMMAND} -E copy_directory
+#             "${CMAKE_SOURCE_DIR}/3rd_app/50-exe2_2"
+#             "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe2_2"
+# )
+
+# # 拷贝，独立软件
+# add_custom_target(copy_exe3_1 ALL
+#     # COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe2_1
+#     COMMAND ${CMAKE_COMMAND} -E copy_directory
+#             "${CMAKE_SOURCE_DIR}/3rd_app/50-exe3_1"
+#             "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/apps/50-exe3_1"
+# )

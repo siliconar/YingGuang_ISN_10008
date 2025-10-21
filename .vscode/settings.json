@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "qpainter": "cpp",
+        "qpainterpath": "cpp",
+        "qstring": "cpp",
+        "filesystem": "cpp",
+        "qmainwindow": "cpp",
+        "iosfwd": "cpp",
+        "xlocbuf": "cpp",
+        "qstandardpaths": "cpp",
+        "qcoreapplication": "cpp",
+        "qfile": "cpp"
+    }
+}

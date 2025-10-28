@@ -34,6 +34,10 @@ void MainWindow::setupUi() {
     // setWindowTitle(u"荧光数据处理验证集成平台系统"_qs);
     // resize(400, 600);
 
+
+    dia_backdoor = new Dialog_BackDoor(this);
+
+
     dia_db = new DbManagerWindow(this);
     // dia_db->setAttribute(Qt::WA_DeleteOnClose, true);
     dia_db->resize(900, 600);
@@ -45,7 +49,7 @@ void MainWindow::setupUi() {
     connect(ui->btn3_2,&QPushButton::clicked, this,&MainWindow::onLaunch3_2);
     connect(ui->btn3_3,&QPushButton::clicked, this,&MainWindow::onLaunch3_3);
     connect(ui->btn3_4,&QPushButton::clicked, this,&MainWindow::onLaunch3_4);
-    connect(ui->btn3_5,&QPushButton::clicked, this,&MainWindow::onLaunch3_5);
+    // connect(ui->btn3_5,&QPushButton::clicked, this,&MainWindow::onLaunch3_5);
 
 
     // 数据库管理
@@ -61,8 +65,21 @@ void MainWindow::setupUi() {
             dia_db->raise();           // 保证弹出在前
             dia_db->activateWindow();  // 设为激活窗口
           }
+    });
+
+    // 后门
+    connect(ui->btn_backdoor, &QPushButton::clicked, this, [this](){
 
 
+        if (dia_backdoor->isVisible()) {
+            // 已经显示 -> 隐藏
+            dia_backdoor->close();
+          } else {
+            // 没显示 -> 打开
+            dia_backdoor->show();
+            dia_backdoor->raise();           // 保证弹出在前
+            dia_backdoor->activateWindow();  // 设为激活窗口
+          }
     });
 
     statusBar()->showMessage(u"就绪"_qs);
@@ -101,6 +118,10 @@ void MainWindow::onLaunch3_1() {
     startProcessGuarded(m_p3_1, m_exe3_1);
 }
 void MainWindow::onLaunch3_2() {
+
+    // 从后门读
+    m_exe3_2 = dia_backdoor->path3_2;
+
     startProcessGuarded(m_p3_2, m_exe3_2);
 }
 void MainWindow::onLaunch3_3() {
@@ -196,7 +217,7 @@ void MainWindow::updateUi() {
     ui->btn3_2->setEnabled(!busy);
     ui->btn3_3->setEnabled(!busy);
     ui->btn3_4->setEnabled(!busy);
-    ui->btn3_5->setEnabled(!busy);
+    // ui->btn3_5->setEnabled(!busy);
 }
 
 bool MainWindow::isProcessRunningSystemWide(const QString& exeBaseName) const {

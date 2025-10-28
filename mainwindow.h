@@ -6,6 +6,7 @@
 #include <QPointer>
 #include <QVector>
 #include "DbManagerWindow.h"
+#include "Dialog_BackDoor.h"
 
 namespace Ui {
 class MainWindow;
@@ -51,7 +52,7 @@ private:
     QString m_exe1 = R"(apps\Internal1-Sun\Internal1-Sun.exe)";
     QString m_exe2_1 = R"(C:\Path\To\AppB.exe)";
     QString m_exe2_2 = R"(apps\50-exe2_2\sif_retrieval_denoise_withGUI.exe)";
-    QString m_exe3_1 = R"(C:\Path\To\AppC.exe)";
+    QString m_exe3_1 = R"(apps\50-exe3_1\sif-retrieval_toGPP.exe)";
     QString m_exe3_2 = R"(C:\Path\To\AppC.exe)";
     QString m_exe3_3 = R"(apps\50-exe3_3\forest_gpp_estimator_gui.exe)";
     QString m_exe3_4 = R"(apps\50-exe3_4\grassland_gpp_estimator_gui.exe)";
@@ -72,6 +73,7 @@ private:
     Ui::MainWindow *ui;
 
     DbManagerWindow *dia_db = nullptr;        // 设置器
+    Dialog_BackDoor *dia_backdoor = nullptr;   // 后门
 };
 
 #endif // MAINWINDOW_H

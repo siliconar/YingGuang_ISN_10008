@@ -41,6 +41,8 @@ add_executable(
     3rd_app/common/pack_definition.h
     3rd_app/common/ConfigManager.h  3rd_app/common/ConfigManager.cpp
 
+    dialog_backdoor.h dialog_backdoor.cpp dialog_backdoor.ui
+
     SplashWidget.h SplashWidget.cpp
     DbManagerWindow.h DbManagerWindow.cpp
     mainWindow.h mainWindow.cpp  mainWindow.ui
@@ -50,6 +52,9 @@ add_executable(
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets  Qt${QT_VERSION_MAJOR}::Sql)
+
+
+set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE YES)
 
 
 # qt deploy

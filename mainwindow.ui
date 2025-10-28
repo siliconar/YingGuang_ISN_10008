@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>453</width>
-    <height>639</height>
+    <height>577</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,6 +38,9 @@
           <bold>true</bold>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 120, 212);</string>
+        </property>
         <property name="text">
          <string>SIF</string>
         </property>
@@ -59,7 +62,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,0,1">
+     <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,0,1,0">
       <item>
        <spacer name="horizontalSpacer_12">
         <property name="orientation">
@@ -74,12 +77,15 @@
        </spacer>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_backdoor">
         <property name="font">
          <font>
           <pointsize>11</pointsize>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 120, 212);</string>
         </property>
         <property name="text">
          <string>卫星遥感反演与产品处理生产应用示范软件</string>
@@ -98,6 +104,16 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_backdoor">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -413,36 +429,6 @@
 应用及精度评价</string>
               </property>
              </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <widget class="QPushButton" name="btn3_5">
-              <property name="minimumSize">
-               <size>
-                <width>120</width>
-                <height>60</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>4.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>

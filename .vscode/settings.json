@@ -9,6 +9,7 @@
         "xlocbuf": "cpp",
         "qstandardpaths": "cpp",
         "qcoreapplication": "cpp",
-        "qfile": "cpp"
+        "qfile": "cpp",
+        "qregularexpression": "cpp"
     }
 }
